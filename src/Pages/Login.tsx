@@ -1,9 +1,15 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useAuth } from "../Hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { parseFirebaseError } from "../Helpers/Utils/firebaseErrors";
-import { FcGoogle } from "react-icons/fc";
+import { Button } from "@/Components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/Components/ui/card"
+import { Input } from "@/Components/ui/input"
+import { Label } from "@/Components/ui/label"
+import { FaGoogle } from "react-icons/fa";
+import GeneralAlert from "@/Components/GeneralAltert";
+import { MdOutlineErrorOutline } from "react-icons/md";
 
 export default function Login() {
   const { signInWithEmail, signInWithGoogle } = useAuth();
@@ -33,22 +39,40 @@ export default function Login() {
   }
 }
 
-
   return (
-      <form onSubmit={handleFormSubmit} className="mt-24 flex flex-col gap-5 thinBorder w-5/6 md:!w-1/2 ml-auto mr-auto">
-        <h1 className="text-4xl text-center font-semibold mt-5" style={{ color: "var(--section-title-color)" }}>Login</h1>
-        <input type="email" placeholder="Email" className="button md:!w-1/2" value={email} onChange={(e) => setEmail(e.target.value)} name="email" autoComplete="email" required/>
-        <input type="password" placeholder="Password" className="button md:!w-1/2" value={password} onChange={(e) => setPassword(e.target.value)} name="password" required/>
-        {err && <p className="text-red-600 text-sm">{err}</p>}
-        <div className="flex flex-col gap-3">
-        <button type="submit" className="button md:!w-1/2 importantButton text-2xl"> Login </button>
-        <button type="button" className="button md:!w-1/2 md:text-2xl cursor-pointer !mt-2" onClick={handleGoogleAccess}><span><FcGoogle className="inline-block mr-1" size={30}/></span> Continue with Google </button>
+    <Card className="w-11/12 mt-10 ml-auto mr-auto md:w-2/3 lg:w-1/3">
+      <CardHeader>
+        <CardTitle className="text-xl text-center pb-3 font-bold">Login to your account</CardTitle>
+        <CardDescription className="text-sm font-medium text-center"> Enter your email below to login to your account </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleFormSubmit} className="grid gap-4">
+          {err && <GeneralAlert title="Error" description={err} icon={<MdOutlineErrorOutline className="h-8 w-8" />} />}
+          <div className="flex flex-col gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email <span className="text-red-600">*</span></Label>
+              <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="m@example.com" required />
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password <span className="text-red-600">*</span> </Label>
+              </div>
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </div>
+            <a onClick={() => {navigate("/reset")}} className="text-sm -mt-3" > Forgot your <span className="text-blue-600 hover:underline font-semibold">password</span>? </a>
+          </div>
+          <CardFooter className="flex-col gap-2">
+        <Button type="submit" className="w-full"> Login </Button>
+        <Button onClick={handleGoogleAccess} variant="neutral" className="w-full">
+          <FaGoogle className="mr-1 mb-0.5 inline-block" /> Login with Google
+        </Button>
+        <div className="mt-5 text-center text-sm">
+          Don&apos;t have an account?{" "}
+          <a onClick={() => {navigate("/register")}} className="text-blue-600 hover:underline font-semibold"> Sign up </a>
         </div>
-        <div className="flex flex-col gap-2 text-center justify-between p-2">
-          <h1 className="text-xl"> New User?</h1>
-          <Link to="/register" className="text-2xl p-3 md:!w-1/2 text-center thinBorder block font-semibold secondaryButton">Register</Link>
-          <Link to="/reset" className="cursor-pointer text-sm mt-10">Forgot <span style={{ color: "var(--section-title-color)" }}>password?</span></Link>
-        </div>
-      </form>
-  );
+      </CardFooter>
+        </form>
+      </CardContent>
+    </Card>
+  )
 }

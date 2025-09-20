@@ -3,5 +3,10 @@
   --subtitle-color: #42a5f5;  
   --section-title-color: #bf360c;
   --theme-color: #ffffff;
+  --main-foreground: oklch(0% 0 0);
+  --main: oklch(78.156% 0.1318 234.134);
+  --border: oklch(0% 0 0);
+  --ring: oklch(0% 0 0 / 0.315);
+  --overlay: oklch(0% 0 0 / 0.275);
+  --shadow: 4px 4px 0px 0px var(--border);
 }
-

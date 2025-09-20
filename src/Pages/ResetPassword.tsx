@@ -1,9 +1,17 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useAuth } from "../Hooks/useAuth";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/Components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/Components/ui/card"
+import { Input } from "@/Components/ui/input"
+import { Label } from "@/Components/ui/label"
+import GeneralAlert from "@/Components/GeneralAltert";
+import { MdOutlineErrorOutline } from "react-icons/md";
+import { CheckCircle2Icon } from "lucide-react"
 
 export default function ResetPassword() {
+  const navigate = useNavigate();
   const { resetPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
@@ -21,15 +29,30 @@ export default function ResetPassword() {
   }
 
   return (
-      <form onSubmit={handleFormSubmit} className="mt-24 flex flex-col gap-5 thinBorder w-5/6 md:!w-1/2 ml-auto mr-auto">
-        <h1 className="text-3xl text-center font-semibold mt-5" style={{ color: "var(--section-title-color)" }}>Reset password</h1>
-        <input name="email" autoComplete="email" type="email" placeholder="Email" className="button md:!w-1/2" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-        {msg && <p className="text-green-700 text-sm">{msg}</p>}
-        {err && <p className="text-red-600 text-sm">{err}</p>}
-        <button type="submit" className="button md:!w-1/2 importantButton"> Send email </button>
-        <div className="text-lg text-center mt-10 mb-4">
-          <Link to="/login" className="text-lg">Back to <span style={{color: "var(--title-color)"}}>Login</span></Link>
-        </div>
-      </form>
+    <Card className="w-11/12 mt-10 ml-auto mr-auto md:w-2/3 lg:w-1/3">
+      <CardHeader>
+        <CardTitle className="text-xl text-center pb-3 font-bold">Reset your password</CardTitle>
+        <CardDescription className="text-sm font-medium text-center"> Enter your email below to reset your password </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleFormSubmit} className="grid gap-4">
+          {err && <GeneralAlert title="Error" description={err} icon={<MdOutlineErrorOutline className="h-8 w-8" />} />}
+          {msg && <GeneralAlert title="Success" description={msg} icon={<CheckCircle2Icon className="h-8 w-8" />} />}
+          <div className="flex flex-col gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email <span className="text-red-600">*</span></Label>
+              <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="m@example.com" required />
+            </div>
+          </div>
+          <CardFooter className="flex-col gap-2">
+            <Button type="submit" className="w-full"> Reset Password </Button>
+            <div className="mt-5 text-center text-sm">
+              Did you remember your password?{" "}
+              <a onClick={() => {navigate("/login")}} className="text-blue-600 hover:underline font-semibold"> Login </a>
+            </div>
+          </CardFooter>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
