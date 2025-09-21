@@ -1,8 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../Hooks/useAuth";
 import { TbLoader2 } from "react-icons/tb";
-
-
+import TopMenu from "./TopMenu";
 
 export default function ProtectedRoute() {
   const { user, loading } = useAuth();
@@ -18,7 +17,10 @@ export default function ProtectedRoute() {
   return (
     <div className="flex">
       <main className="flex-1 p-4">
-        <Outlet />
+        <TopMenu />
+        <div className="mt-48">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
