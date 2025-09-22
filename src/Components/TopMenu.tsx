@@ -22,11 +22,12 @@ export default function TopMenu() {
         </Button>
         <Button 
           className="w-1/6" 
-          onClick={() => navigate("/places")}
-          variant={location.pathname === "/places" ? "default" : "reverse"}
+          onClick={() => navigate("/transport")}
+          variant={location.pathname === "/transport" ? "default" : "reverse"}
         >
-          {isMobile ? <MapPinHouse /> : "Places"}
+          {isMobile ? <Briefcase /> : "Transport"}
         </Button>
+        
         <Button 
           className="w-1/6" 
           onClick={() => navigate("/hotels")}
@@ -36,11 +37,12 @@ export default function TopMenu() {
         </Button>
         <Button 
           className="w-1/6" 
-          onClick={() => navigate("/transport")}
-          variant={location.pathname === "/transport" ? "default" : "reverse"}
+          onClick={() => navigate("/places")}
+          variant={location.pathname === "/places" ? "default" : "reverse"}
         >
-          {isMobile ? <Briefcase /> : "Transport"}
+          {isMobile ? <MapPinHouse /> : "Places"}
         </Button>
+        
       </nav>
     </div>
   )
