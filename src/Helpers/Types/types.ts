@@ -24,3 +24,10 @@ export type TravelInformationState = {
   updateStartDay: (newStartDay: Date) => void;
   updateEndDay: (newEndDay: Date) => void;
 };
+
+export type Destination = {
+  name: string;
+  image: string;
+  alt: string;
+  country: string;
+};

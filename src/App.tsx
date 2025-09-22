@@ -7,30 +7,28 @@ import Home from "./Pages/ProtectedRoutes/Home";
 import Hotels from "./Pages/ProtectedRoutes/Hotels";
 import Places from "./Pages/ProtectedRoutes/Places";
 import Transport from "./Pages/ProtectedRoutes/Transport";
-import Settings from "./Pages/ProtectedRoutes/Settings";
 import Arrival from "./Pages/Arrival";
 
 export default function App() {
   return (
-    <>
-          <Routes>
-            <Route path="/" element={<Navigate to="/arrival" replace />} />
-            <Route path="/arrival" element={<Arrival />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/reset" element={<ResetPassword />} />
-          </Routes>
-
-        <Routes>
-          <Route path="/*" element={<ProtectedRoute />}>
-            <Route path="home" element={<Home />}/>
-            <Route path="hotels" element={<Hotels />}/>
-            <Route path="places" element={<Places />}/>
-            <Route path="transport" element={<Transport />}/>
-            <Route path="settings" element={<Settings />}/>
-          </Route>
-          <Route path="*" element={<Navigate to="/arrival" replace />} />
-        </Routes>
-    </>
+    <Routes>
+      {/* Public routes */}
+      <Route path="/" element={<Navigate to="/arrival" replace />} />
+      <Route path="/arrival" element={<Arrival />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/reset" element={<ResetPassword />} />
+      
+      {/* Protected routes - using nested routing with Outlet */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/home" element={<Home />} />
+        <Route path="/hotels" element={<Hotels />} />
+        <Route path="/places" element={<Places />} />
+        <Route path="/transport" element={<Transport />} />
+      </Route>
+      
+      {/* Catch-all route */}
+      <Route path="*" element={<Navigate to="/arrival" replace />} />
+    </Routes>
   );
 }

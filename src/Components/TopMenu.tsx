@@ -1,6 +1,6 @@
 import { Button } from "./ui/button"
 import { useNavigate, useLocation } from "react-router-dom"
-import { MapPinHouse, HotelIcon, Briefcase, Settings, House } from "lucide-react"
+import { MapPinHouse, HotelIcon, Briefcase, House } from "lucide-react"
 import FullNameSymbol from "./Logos/FullNameSymbol"
 import { useIsMobile } from "@/Hooks/useIsMobile"
 
@@ -40,13 +40,6 @@ export default function TopMenu() {
           variant={location.pathname === "/transport" ? "default" : "reverse"}
         >
           {isMobile ? <Briefcase /> : "Transport"}
-        </Button>
-        <Button 
-          className="w-1/6" 
-          onClick={() => navigate("/settings")}
-          variant={location.pathname === "/settings" ? "default" : "reverse"}
-        >
-          {isMobile ? <Settings /> : "Settings"}
         </Button>
       </nav>
     </div>
